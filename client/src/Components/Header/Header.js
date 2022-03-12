@@ -36,9 +36,9 @@ const Header = () => {
     setMenuOpen((p) => !p);
   };
 
-  const ctaClickHandler = () => {
+  const ctaClickHandler = (id) => {
     menuToggleHandler();
-    history.push("/page-cta");
+    history.push(`/take/${id}`);
   };
 
   return (

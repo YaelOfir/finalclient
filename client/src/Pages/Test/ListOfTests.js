@@ -54,7 +54,7 @@ function ListOfTests() {
                 <div className={classes.item}>
                   <Card key={index}>
                     <div className={classes.content}>
-                      <h3>Test: {item.title}</h3>
+                      <h4>Test Name: {item.title}</h4>
                       <h4>Id: {item.id}</h4>
                       <p>Topic: {item.topic}</p>
                       <p>NoteToPass: {item.noteToPass}</p>
@@ -66,6 +66,9 @@ function ListOfTests() {
                       </Link>
                       <Link to={`/edit-test/${item.id}`}>
                         <button>Edit</button>
+                      </Link>
+                      <Link to={`/take-test/${item.id}`}>
+                        <button>TakeTest</button>
                       </Link>
                     </div>
                   </Card>

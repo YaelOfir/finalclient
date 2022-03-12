@@ -7,11 +7,12 @@ import classes from "../../Styles/tests/NewTest.module.css";
 import SelectedQuestions from "../Question/SelectedQuestions";
 import api from "../../API/testApi";
 import qApi from "../../API/questionApi";
+import { useForm } from "react-hook-form";
+
 function NewTestPage() {
   const initialState = {
     title: "",
-    topics: ["Math", "Science", "Technology", "Sports", "History", "Misc"],
-    topicVal: "Math",
+    topic: "",
     questions: [],
     noteToPass: false,
     showAnswer: false,
@@ -30,6 +31,12 @@ function NewTestPage() {
   const [testState, setTestState] = useState(initialState);
   const [selected, setSelected] = useState([]);
   const [questionList, setQuestionList] = useState([]);
+
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm();
 
   const handleRadio = (e) => {
     setSelected(JSON.parse(e.target.value));
@@ -92,9 +99,7 @@ function NewTestPage() {
   };
 
   const history = useHistory();
-  const onSubmit = (e) => {
-    e.preventDefault();
-
+  const onSubmit = () => {
     const questionsToSend = selected.map((questionId) => {
       return questionList.find((q) => q.id === questionId);
     });
@@ -110,7 +115,7 @@ function NewTestPage() {
 
   return (
     <div>
-      <form className={classes.scroll} onSubmit={onSubmit}>
+      <form className={classes.scroll} onSubmit={handleSubmit(onSubmit)}>
         <h1>Create a new Test</h1>
         <div className={classes.content}>
           <h3 className={classes.control}> Test Title</h3>
@@ -119,19 +124,27 @@ function NewTestPage() {
             type="text"
             id="title"
             onChange={handlerInputChange}
+            {...register("title", {
+              required: "Please enter title",
+              message: "Please enter title",
+            })}
           />
+          {errors.title && errors.title.message}
         </div>
-        <select
-          onChange={(e) =>
-            setTestState({ ...testState, topicVal: e.target.value })
-          }
-        >
-          {testState.topics.map((cat, idx) => (
-            <option key={idx} value={cat}>
-              {cat}
-            </option>
-          ))}
-        </select>
+        <div className={classes.content}>
+          <h3 className={classes.control}> Topic </h3>
+          <input
+            name="topic"
+            type="text"
+            id="topic"
+            onChange={handlerInputChange}
+            {...register("topic", {
+              required: "Please enter a topic",
+              message: "Please enter a topic",
+            })}
+          />
+          {errors.topic && errors.topic.message}
+        </div>
         <div>
           <p>Show Answers at the end of the Test</p>
           <input
@@ -139,31 +152,6 @@ function NewTestPage() {
             onChange={showAnswer}
             type="checkbox"
             placeholder="Show Answers at the end of the Test"
-          />
-        </div>
-        <div className={classes.control}>
-          <h3 className={classes.control}>Passed Message</h3>
-          <input
-            name="textSucceeded"
-            id="textSucceeded"
-            onChange={handlerInputChange}
-          />
-        </div>
-        <div className={classes.control}>
-          <h3 className={classes.control}>Failed Message</h3>
-          <input
-            name="textFailed"
-            id="textFailed"
-            onChange={handlerInputChange}
-          />
-        </div>
-        <div className={classes.content}>
-          <h3 className={classes.control}>Test Time</h3>
-          <input
-            name="time"
-            type="time"
-            id="time"
-            onChange={handlerInputChange}
           />
         </div>
         <div>
@@ -175,7 +163,49 @@ function NewTestPage() {
             placeholder="Passing Grade"
           />
         </div>
+        <div className={classes.control}>
+          <h3 className={classes.control}>Passed Message</h3>
+          <input
+            name="textSucceeded"
+            id="textSucceeded"
+            onChange={handlerInputChange}
+            {...register("textSucceeded", {
+              required: "required field",
+              message: "required field",
+            })}
+          />
+          {errors.textSucceeded && errors.textSucceeded.message}
+        </div>
+        <div className={classes.control}>
+          <h3 className={classes.control}>Failed Message</h3>
+          <input
+            name="textFailed"
+            id="textFailed"
+            onChange={handlerInputChange}
+            {...register("textFailed", {
+              required: "required field",
+              message: "required field",
+            })}
+          />
+          {errors.textFailed && errors.textFailed.message}
+        </div>
+        <div className={classes.content}>
+          <h3 className={classes.control}>Test Time</h3>
+          <input
+            name="time"
+            type="time"
+            id="time"
+            onChange={handlerInputChange}
+            {...register("time", {
+              required: "required field",
+              message: "required field",
+            })}
+          />
+          {errors.time && errors.time.message}
+        </div>
+
         <div>
+          Questions:
           <SelectedQuestions
             value={testState.questions}
             questionList={questionList}

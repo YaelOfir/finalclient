@@ -16,12 +16,12 @@ const ViewTest = () => {
   const fetchSpecificTest = async (id) => {
     const response = await api.get(`/test/${id}`);
     if (response.status === 200) {
-      setTest({ ...response.data[0] });
+      setTest({...response.data[0] });
     }
   };
 
   return (
-    <div>
+    <div className={classes.container}>
       <p>{test && test.id}</p>
       <h3>Title:</h3>
       <p>{test && test.title}</p>

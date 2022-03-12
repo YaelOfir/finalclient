@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import QuestionCard from "../../Components/Card/Card";
 import classes from "../../Styles/questions/Questions.module.css";
 
-function Question(props) {
+function Question() {
   const [search, setSearch] = useState([]);
   const [questionList, setQuestionList] = useState([]);
 
@@ -34,7 +34,7 @@ function Question(props) {
               if (search == "") {
                 return item;
               } else if (
-                item.title.toLowerCase().includes(search.toLowerCase())
+                item.questionName.toLowerCase().includes(search.toLowerCase())
               ) {
                 return item;
               }
@@ -44,7 +44,7 @@ function Question(props) {
                 <div className={classes.item}>
                   <QuestionCard key={index}>
                     <div className={classes.content}>
-                      <h3>Question Name: {item.questionName}</h3>
+                      <h4>Question Name: {item.questionName}</h4>
                       <h4>Id: {index + 1}</h4>
                       <p>answers: {item.answers}</p>
                       <p>correctAnswer: {item.correctAnswer}</p>

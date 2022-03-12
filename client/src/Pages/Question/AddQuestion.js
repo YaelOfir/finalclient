@@ -1,7 +1,9 @@
 import React from "react";
-import "../../Styles/questions/Questions.module.css";
+import classes from "../../Styles/questions/Questions.module.css";
 import Dialog from "../../Components/Dialog/Dialog";
 import api from "../../API/questionApi";
+import { useForm } from "react-hook-form";
+
 export default class AddQuestion extends React.Component {
   constructor(props) {
     super(props);
@@ -11,34 +13,17 @@ export default class AddQuestion extends React.Component {
       questionName: "",
       answers: [],
       correctAnswer: "",
+      topic: "",
     };
   }
-  selectPrivate = (e) => {
-    if (e.target.checked === true) {
-      this.setState({
-        mustBeSignedIn: e.target.checked,
-      });
-    } else {
-      this.setState({ mustBeSignedIn: false });
-    }
-  };
-  handleAddInput = () => {
-    this.setState([...this.state, { answers: [] }]);
-  };
 
-  handleRemoveInput = (index) => {
-    const list = [...this.state, { answers: [] }];
-    list.splice(index, 1);
-    this.setState(list);
-  };
-
-  addAnswer = () => {
+  addInputAnswer = () => {
     this.setState({
       answers: this.state.answers.concat(""),
     });
   };
 
-  updateAnswer = (e, i) => {
+  addAnswer = (e, i) => {
     let newArr = Object.assign([], this.state.answers);
     newArr[i] = e.target.value;
     this.setState({
@@ -65,6 +50,7 @@ export default class AddQuestion extends React.Component {
       answers: this.state.answers,
       correctAnswer: this.state.correctAnswer,
       questionName: this.state.questionName,
+      topic: this.state.topic,
     };
     this.setState({
       questions: this.state.questions.concat(question),
@@ -72,6 +58,7 @@ export default class AddQuestion extends React.Component {
       questionName: "",
       answers: [],
       correctAnswer: "",
+      topic: "",
     });
     api
       .post("/add", {
@@ -92,23 +79,25 @@ export default class AddQuestion extends React.Component {
     return (
       <div className="create-quiz-wrapper">
         <div className="main">
-          {this.state.questions.map((ques, idx) => (
+          {this.state.questions.map((ques, idx, topic) => (
             <div className="question" key={idx}>
-              <div>{ques.questionName}</div>
+              <h4>Question Prequel:</h4>
+              <div>Title: {ques.questionName}</div>
+              <div> Topic: {ques.topic}</div>
               <div>Correct Answer: {ques.correctAnswer}</div>
               <div>Num of answers: {ques.answers.length}</div>
               <span
-                className="btn delete"
+                className={classes.delete}
                 onClick={() => this.removeQuestion(ques)}
               >
-                Delete
+                Clear
               </span>
             </div>
           ))}
 
           <div className="questions">
             <div
-              className="add-question"
+              className={classes.qu}
               onClick={() => this.setState({ addQuestion: true })}
             >
               Add Question
@@ -116,18 +105,31 @@ export default class AddQuestion extends React.Component {
           </div>
 
           <Dialog model={this.state.addQuestion}>
-            <div className="new-question-form">
+            <div className={"new-question-form"}>
               <input
-                className="input"
                 placeholder="Question"
                 value={this.state.questionName}
                 onChange={(e) =>
                   this.setState({ questionName: e.target.value })
                 }
+                // {...register("questionName", {
+                //   required: "Please enter a topic",
+                //   message: "Please enter a topic",
+                // })}
               />
-              <div>Answers</div>
-              {this.state.answers.map((ans, idx) => (
-                <div className="answer-form" key={idx}>
+              {/* {errors.questionName && errors.questionName.message}{" "} */}
+              <input
+                placeholder="Topic"
+                value={this.state.topic}
+                onChange={(e) => this.setState({ topic: e.target.value })}
+                // {...register("topic", {
+                //   required: "Please enter a topic",
+                //   message: "Please enter a topic",
+                // })}
+              />
+              {/* {errors.topic && errors.topic.message} <h3>Answers</h3> */}
+              {this.state.answers.map((ans, idx, topic) => (
+                <div className="answerform" key={idx}>
                   <input
                     type="radio"
                     value={this.state.ans}
@@ -139,24 +141,13 @@ export default class AddQuestion extends React.Component {
                     type="text"
                     placeholder="Answer"
                     value={this.state.answers[idx]}
-                    onChange={(e) => this.updateAnswer(e, idx)}
+                    onChange={(e) => this.addAnswer(e, idx)}
                   />
                 </div>
               ))}
-              <div className="add-answer" onClick={this.addAnswer}>
+              <div className={classes.addAnswer} onClick={this.addInputAnswer}>
                 Add Answer
               </div>
-              {/* <div>
-                <input
-                  type="button"
-                  value="remove"
-                  onClick={handleRemoveInput}
-                />
-
-                {answers.length - 1 === index && (
-                  <input type="button" value="add" onClick={handleAddInput} />
-                )}
-              </div> */}
               <div className="btn-wrapper">
                 <div
                   className="btn"

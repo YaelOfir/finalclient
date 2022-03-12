@@ -4,12 +4,14 @@ import Layout from "./Components/Layout/Layout";
 import ListOfTests from "./Pages/Test/ListOfTests";
 import AddTest from "./Pages/Test/AddTest";
 import ViewTest from "./Pages/Test/ViewTest";
+import TakeTest from "./Pages/Test/TakeTest";
 import Dashboard from "./Pages/Admin/Dashboard";
 import Login from "./Pages/Admin/Login";
 import useToken from "./Helpers/useToken";
 import AddQuestion from "./Pages/Question/AddQuestion";
 import ListOfQuestions from "./Pages/Question/ListOfQuestions";
 import ViewQuestion from "./Pages/Question/ViewQuestion";
+
 function App() {
   const { token, setToken } = useToken();
 
@@ -34,6 +36,9 @@ function App() {
         </Route>
         <Route path="/view-test">
           <ViewTest />
+        </Route>
+        <Route path="/take-test">
+          <TakeTest />
         </Route>
         <Route path="/add-question">
           <AddQuestion />

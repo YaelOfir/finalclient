@@ -48,9 +48,10 @@
 
 .scroll {
   height: 80vh;
-  width: 30vh;
+  width: 60vh;
   overflow-y: scroll;
   padding: 1rem;
+  width: 80%;
 }
 .create-quiz-wrapper {
   display: flex;

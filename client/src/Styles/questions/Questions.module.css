@@ -1,0 +1,104 @@
+.item {
+  margin: 1rem 0;
+}
+
+.image {
+  width: 100%;
+  height: 20rem;
+  overflow: hidden;
+  border-top-right-radius: 6px;
+  border-top-left-radius: 6px;
+}
+
+.image img {
+  width: 100%;
+  object-fit: cover;
+}
+
+.content {
+  text-align: center;
+  padding: 1rem;
+}
+
+.content h3 {
+  font-size: 1.25rem;
+  color: #2c292b;
+}
+
+.actions {
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.actions button {
+  font: inherit;
+  cursor: pointer;
+  color: #77002e;
+  border: 1px solid #97003a;
+  background-color: transparent;
+  padding: 0.5rem 1.5rem;
+  border-radius: 4px;
+}
+
+.actions button:hover,
+.actions button:active {
+  background-color: #000000;
+}
+
+.scroll {
+  height: 80vh;
+  overflow-y: scroll;
+  padding: 1rem;
+}
+
+.create-quiz-wrapper .add-question,
+.add-answer {
+  box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
+  padding: 10px 0;
+  text-align: center;
+  font-size: 1.5em;
+  margin: 30px 0;
+  cursor: pointer;
+}
+
+.create-quiz-wrapper .btn-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.create-quiz-wrapper .btn-wrapper .btn {
+  color: white;
+  border-radius: 10px !important;
+}
+.create-quiz-wrapper .btn-wrapper .btn:first-child {
+  background-color: red;
+}
+.create-quiz-wrapper .question {
+  display: flex;
+  position: relative;
+  background-color: #eff0f1;
+  padding: 12px;
+  width: 90%;
+  box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.2);
+  margin: 10px 0;
+  border-left: 5px solid #00aaf1;
+}
+
+.create-quiz-wrapper .question div {
+  margin-right: 40px;
+}
+.create-quiz-wrapper .question .delete {
+  position: absolute;
+  right: 20px;
+  background-color: red;
+  border-radius: 10px !important;
+  color: white;
+  padding: 8px;
+  top: 5px;
+}
+
+.create-quiz-wrapper .save-quiz {
+  border-radius: 10px;
+  color: white;
+}
